@@ -1,33 +1,295 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Profil</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4A40BF;
+            --accent: #FF6584;
+            --light: #F8F9FA;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f5f7fa;
+            padding-bottom: 80px;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item.active svg {
+            fill: var(--primary);
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        
+        .edit-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .edit-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+    </style>
 </head>
-<body class="profile-page">
+<body class="max-w-md mx-auto">
+    <!-- Header with Profile Photo -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white pt-12 pb-6 px-6 rounded-b-3xl shadow-lg">
+        <div class="flex flex-col items-center">
+            <div class="relative mb-4">
+                <img id="profileImage" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/871e9678-2359-4ad1-860a-c779e9f071b4.png" alt="Professional headshot portrait of a young professional with neat hairstyle and formal attire" class="profile-img rounded-full">
+                <button onclick="document.getElementById('imageUpload').click()" class="absolute right-0 bottom-0 bg-white p-2 rounded-full shadow-md">
+                    <i class="fas fa-camera text-gray-700"></i>
+                </button>
+                <input type="file" id="imageUpload" accept="image/*" class="hidden" onchange="previewImage(event)">
+            </div>
+            <div class="flex items-center">
+                <h1 id="profileName" class="text-2xl font-bold mr-2">John Doe</h1>
+                <button onclick="editName()" class="edit-btn p-1 rounded-full">
+                    <i class="fas fa-pen text-white text-sm"></i>
+                </button>
+            </div>
+            <p class="text-white/90 mt-1">Web Developer</p>
+        </div>
+    </header>
 
-  <section class="profile-header">
-    <img src="https://ui-avatars.com/api/?name=Maklo+Peler" alt="Foto Profil" class="profile-img" />
-    <h2 class="profile-name">Maklo Peler</h2>
-    <p class="profile-title">Developer & Admin</p>
-  </section>
+    <main class="px-6 mt-6">
+        <!-- Profile Section -->
+        <section id="profileSection" class="section active">
+            <div class="card bg-white rounded-xl p-6 mb-4 shadow">
+                <h2 class="text-lg font-semibold mb-4 text-gray-700">About Me</h2>
+                <p class="text-gray-600">Hello! I'm a passionate web developer with 5 years of experience building modern web applications. I love to code and design beautiful interfaces.</p>
+            </div>
+            
+            <div class="card bg-white rounded-xl p-6 mb-4 shadow">
+                <h2 class="text-lg font-semibold mb-4 text-gray-700">Contact Info</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <i class="fas fa-envelope text-gray-500 w-6"></i>
+                        <span class="text-gray-600 ml-2">john.doe@example.com</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-phone text-gray-500 w-6"></i>
+                        <span class="text-gray-600 ml-2">+1 234 567 8900</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marker-alt text-gray-500 w-6"></i>
+                        <span class="text-gray-600 ml-2">San Francisco, CA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full btn-primary text-white py-3 rounded-xl font-medium mt-4 shadow-md">
+                Edit Profile
+            </button>
+        </section>
 
-  <section class="profile-settings">
-    <h3>Pengaturan</h3>
-    <ul class="settings-list">
-      <li><a href="#">🔄 Type Akun</a></li>
-      <li><a href="support.html">🆘 Bantuan</a></li>
-      <li><a href="#">⚙️ Ubah Profil</a></li>
-    </ul>
-  </section>
+        <!-- Help Section -->
+        <section id="helpSection" class="section">
+            <div class="card bg-white rounded-xl p-6 mb-4 shadow">
+                <h2 class="text-lg font-semibold mb-4 text-gray-700">Help Center</h2>
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to update profile?</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Privacy settings</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Contact support</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">FAQs</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <div class="bottom-nav">
-    <a href="index.html"><div>🏠<br>Home</div></a>
-    <a href="support.html"><div>💥<br>Support</div></a>
-    <a href="profile.html"><div>😹<br>Profil</div></a>
-  </div>
+        <!-- Settings Section -->
+        <section id="settingsSection" class="section">
+            <div class="card bg-white rounded-xl p-6 mb-4 shadow">
+                <h2 class="text-lg font-semibold mb-4 text-gray-700">Account Settings</h2>
+                <div class="space-y-4">
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Change Password</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Notification Settings</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Privacy Settings</span>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Language</span>
+                            <span class="text-gray-500">English <i class="fas fa-chevron-down ml-1"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full bg-red-100 text-red-600 py-3 rounded-xl font-medium mt-4 shadow-md">
+                Logout
+            </button>
+        </section>
+    </main>
 
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-100 py-3 px-6 max-w-md mx-auto">
+        <div class="flex justify-around">
+            <button onclick="showSection('profileSection')" class="nav-item active text-center flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span class="text-xs mt-1">Profile</span>
+            </button>
+            <button onclick="showSection('helpSection')" class="nav-item text-gray-400 text-center flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-xs mt-1">Help</span>
+            </button>
+            <button onclick="showSection('settingsSection')" class="nav-item text-gray-400 text-center flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-xs mt-1">Settings</span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // Function to switch between sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.classList.add('text-gray-400');
+                const svg = item.querySelector('svg');
+                if (svg) {
+                    svg.classList.remove('fill-primary');
+                    svg.classList.add('fill-none');
+                }
+            });
+            
+            const currentNavItem = event.currentTarget;
+            currentNavItem.classList.add('active');
+            currentNavItem.classList.remove('text-gray-400');
+            const currentSvg = currentNavItem.querySelector('svg');
+            if (currentSvg) {
+                currentSvg.classList.add('fill-primary');
+                currentSvg.classList.remove('fill-none');
+            }
+        }
+        
+        // Function to edit profile name
+        function editName() {
+            const nameElement = document.getElementById('profileName');
+            const currentName = nameElement.textContent;
+            const newName = prompt('Enter your new name:', currentName);
+            
+            if (newName && newName.trim() !== '') {
+                nameElement.textContent = newName.trim();
+                // Here you would typically send the new name to your backend
+            }
+        }
+        
+        // Function to preview selected image
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('profileImage');
+                output.src = reader.result;
+                // Here you would typically upload the image to your backend
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        
+        // Initialize the first nav item as active
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNavItem = document.querySelector('.nav-item');
+            if (firstNavItem) {
+                firstNavItem.classList.add('active');
+                firstNavItem.classList.remove('text-gray-400');
+                const svg = firstNavItem.querySelector('svg');
+                if (svg) {
+                    svg.classList.add('fill-primary');
+                    svg.classList.remove('fill-none');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+
