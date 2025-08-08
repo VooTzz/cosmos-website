@@ -1,49 +1,54 @@
-const express = require("express");
-const session = require("express-session");
-const path = require("path");
-const users = require("./database"); // Ambil dari file database.js
-
-const app = express();
-
-// Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: "rahasia_super_aman",
-  resave: false,
-  saveUninitialized: true
-}));
-
-// Serve file HTML (login, dashboard, dll)
-app.use(express.static(path.join(__dirname, "public")));
-
-// Routing utama
-app.get("/", (req, res) => {
-  if (req.session.user) {
-    return res.redirect("/dashboard.html");
-  }
-  res.redirect("/login.html");
-});
-
-// Proses Login
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (user) {
-    req.session.user = user;
-    return res.redirect("/dashboard.html");
+document.addEventListener("DOMContentLoaded", function () {
+  // Simpan user default jika belum ada
+  const defaultUser = { username: "user", password: "1234" };
+  if (!localStorage.getItem("users")) {
+    localStorage.setItem("users", JSON.stringify([defaultUser]));
   }
 
-  res.send("Login gagal. <a href='/login.html'>Coba lagi</a>");
-});
+  // === LOGIN ===
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-// Logout
-app.get("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/login.html");
-  });
-});
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const message = document.getElementById("login-message");
 
-app.listen(3000, () => {
-  console.log("Server berjalan di http://localhost:3000");
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        message.style.color = "green";
+        message.innerText = "Login berhasil...";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
+      } else {
+        message.style.color = "red";
+        message.innerText = "Username atau password salah!";
+      }
+    });
+  }
+
+  // === Proteksi Dashboard ===
+  const currentPage = window.location.pathname;
+  if (currentPage.includes("dashboard.html")) {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) {
+      alert("Anda harus login terlebih dahulu!");
+      window.location.href = "index.html";
+    } else {
+      // Tampilkan nama pengguna di dashboard
+      const userDisplay = document.getElementById("user-display");
+      if (userDisplay) userDisplay.innerText = user.username;
+    }
+
+    // Tombol logout
+    window.logout = function () {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    };
+  }
 });
