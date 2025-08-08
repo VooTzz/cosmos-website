@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 20px 0;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .logout {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .logout a {
+      background: #d32f2f;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    main {
+      margin-top: 80px;
+    }
+
+    .button-container {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-container a {
+      background: #1976d2;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .button-container a:hover {
+      background: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Selamat Datang di Dashboard 🎉</h1>
+    <div class="logout">
+      <a href="/logout">Logout</a>
+    </div>
+  </header>
+
+  <main>
+    <p>Silakan pilih halaman di bawah ini:</p>
+
+    <div class="button-container">
+      <a href="/dashboard.html">🏠 Home</a>
+      <a href="/support.html">🛠 Support</a>
+      <a href="/profil.html">👤 Profil</a>
+    </div>
+  </main>
+
+</body>
+</html>
