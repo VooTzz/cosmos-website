@@ -1,87 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f1f1f1;
       margin: 0;
       padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .dashboard-container {
+      padding: 20px;
+      padding-bottom: 100px; /* untuk memberi ruang bawah navigasi */
+    }
+
+    .topbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
       text-align: center;
     }
 
-    header {
-      background: #333;
-      color: white;
-      padding: 20px 0;
+    .profile-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
     }
 
-    header h1 {
-      margin: 0;
+    .profile-card:hover {
+      transform: scale(1.01);
     }
 
-    .logout {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+    .profile-info {
+      margin-top: 10px;
+      font-size: 14px;
     }
 
-    .logout a {
-      background: #d32f2f;
-      color: white;
-      padding: 10px 15px;
-      text-decoration: none;
-      border-radius: 5px;
+    .profile-balance {
+      margin-top: 10px;
+      font-weight: bold;
     }
 
-    main {
-      margin-top: 80px;
-    }
-
-    .button-container {
-      margin-top: 40px;
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      justify-content: space-around;
+      border-top: 1px solid #ccc;
+      padding: 10px 0;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .button-container a {
-      background: #1976d2;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 8px;
+    .bottom-nav a {
+      text-align: center;
       text-decoration: none;
-      font-size: 16px;
-      transition: background 0.3s;
+      color: #333;
+      font-size: 14px;
     }
 
-    .button-container a:hover {
-      background: #0d47a1;
+    .bottom-nav a div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Selamat Datang di Dashboard 🎉</h1>
-    <div class="logout">
-      <a href="/logout">Logout</a>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <h2>Dashboard</h2>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="dashboard-container">
+
+    <!-- Card Profil Utama -->
+    <div class="profile-card" onclick="window.location.href='profil.html'">
+      <h3 id="username">User</h3>
+      <div class="profile-info">
+        Level: <strong>LV1</strong> &nbsp;|&nbsp; Kode: <strong>HGQF6B</strong>
+      </div>
+      <div class="profile-balance">Saldo: Rp <span id="balance">0</span></div>
     </div>
-  </header>
 
-  <main>
-    <p>Silakan pilih halaman di bawah ini:</p>
-
-    <div class="button-container">
-      <a href="/dashboard.html">🏠 Home</a>
-      <a href="/support.html">🛠 Support</a>
-      <a href="/profil.html">👤 Profil</a>
+    <!-- Tambahan 4 Card -->
+    <div class="profile-card" onclick="window.location.href='apj1.html'">
+      <h3>AP - JAKARTA 001</h3>
+      <div class="profile-info">PENDAPATAN 1000000 - 5900000</div>
+      <div class="profile-balance">Rp 500.000</div>
     </div>
-  </main>
 
+    <div class="profile-card" onclick="window.location.href='apj2.html'">
+      <h3>AP - JAKARTA 002</h3>
+      <div class="profile-info">PENDAPATAN 500000 - 1500000</div>
+      <div class="profile-balance">Rp 150.000</div>
+    </div>
+
+    <div class="profile-card" onclick="window.location.href='transaksi.html'">
+      <h3>Transaksi</h3>
+      <div class="profile-info">Riwayat pembayaran dan pendapatan</div>
+      <div class="profile-balance">Total: Rp 0</div>
+    </div>
+
+    <div class="profile-card" onclick="window.location.href='pengaturan.html'">
+      <h3>Pengaturan</h3>
+      <div class="profile-info">Ubah informasi akun & preferensi</div>
+      <div class="profile-balance">•••</div>
+    </div>
+
+    <p>Selamat datang di dashboard. Silakan gunakan menu navigasi di bawah.</p>
+  </div>
+
+  <!-- Navigasi Bawah -->
+  <div class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Rumah</div></a>
+    <a href="aktiva.html"><div>🚗<br>Aktiva</div></a>
+    <a href="berita.html"><div>📰<br>Berita</div></a>
+    <a href="profil.html"><div>👤<br>Saya</div></a>
+  </div>
+
+  <script>
+    // Ambil nama akun dari localStorage
+    const akun = localStorage.getItem("loggedInUser") || "User";
+    document.getElementById("username").innerText = akun;
+
+    // Saldo simulasi
+    const saldoSimulasi = 341667;
+    document.getElementById("balance").innerText = saldoSimulasi.toLocaleString("id-ID");
+  </script>
 </body>
 </html>
